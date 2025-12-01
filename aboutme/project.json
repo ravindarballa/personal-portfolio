@@ -1,0 +1,32 @@
+{
+    "name": "aboutme",
+    "root": "aboutme",
+    "sourceRoot": "aboutme/src",
+    "projectType": "application",
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "outputs": ["dist/apps/aboutme"],
+        "options": {
+          "outputPath": "dist/apps/aboutme",
+          "index": "aboutme/src/index.html",
+          "main": "aboutme/src/main.ts",
+          "tsConfig": "aboutme/tsconfig.app.json",
+          "assets": ["aboutme/src/assets"]
+        }
+      },
+      "serve": {
+        "executor": "@nx/webpack:dev-server",
+        "options": {
+          "buildTarget": "aboutme:build"
+        }
+      },
+      "typecheck": {
+        "executor": "@nx/js:tsc",
+        "options": {
+          "build": true
+        }
+      }
+    }
+  }
+  

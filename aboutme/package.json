@@ -1,0 +1,115 @@
+{
+  "name": "aboutme",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "aboutme",
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "compiler": "babel",
+          "outputPath": "aboutme/dist",
+          "index": "aboutme/src/index.html",
+          "baseHref": "/",
+          "main": "aboutme/src/main.ts",
+          "tsConfig": "aboutme/tsconfig.app.json",
+          "assets": [
+            "aboutme/src/favicon.ico",
+            "aboutme/src/assets"
+          ],
+          "styles": [
+            "aboutme/src/styles.css"
+          ],
+          "scripts": [],
+          "webpackConfig": "aboutme/webpack.config.ts"
+        },
+        "configurations": {
+          "development": {
+            "extractLicenses": false,
+            "optimization": false,
+            "sourceMap": true,
+            "vendorChunk": true
+          },
+          "production": {
+            "fileReplacements": [
+              {
+                "replace": "aboutme/src/environments/environment.ts",
+                "with": "aboutme/src/environments/environment.prod.ts"
+              }
+            ],
+            "optimization": true,
+            "outputHashing": "all",
+            "sourceMap": false,
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false,
+            "webpackConfig": "aboutme/webpack.config.prod.ts"
+          }
+        },
+        "dependsOn": [
+          "^build",
+          "typecheck"
+        ]
+      },
+      "serve": {
+        "executor": "@nx/react:module-federation-dev-server",
+        "defaultConfiguration": "development",
+        "options": {
+          "buildTarget": "aboutme:build",
+          "hmr": true,
+          "port": 4301
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "aboutme:build:development"
+          },
+          "production": {
+            "buildTarget": "aboutme:build:production",
+            "hmr": false
+          }
+        },
+        "dependsOn": [
+          "typecheck"
+        ]
+      },
+      "serve-static": {
+        "executor": "@nx/react:module-federation-static-server",
+        "defaultConfiguration": "production",
+        "options": {
+          "serveTarget": "aboutme:serve"
+        },
+        "configurations": {
+          "development": {
+            "serveTarget": "aboutme:serve:development"
+          },
+          "production": {
+            "serveTarget": "aboutme:serve:production"
+          }
+        }
+      },
+      "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": [
+          "{projectRoot}/test-output/jest/coverage"
+        ],
+        "options": {
+          "jestConfig": "aboutme/jest.config.cts"
+        }
+      }
+    }
+  },
+  "exports": {
+    "./Module": {
+      "@mfe-react-nx-app/source": "./src/remote-entry.ts",
+      "types": "./src/remote-entry.ts",
+      "import": "./src/remote-entry.ts",
+      "default": "./src/remote-entry.ts"
+    }
+  },
+  "types": "./src/remote-entry.ts"
+}

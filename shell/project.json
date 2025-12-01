@@ -1,0 +1,32 @@
+{
+    "name": "shell",
+    "root": "shell",
+    "sourceRoot": "shell/src",
+    "projectType": "application",
+    "targets": {
+      "build": {
+        "executor": "@nx/webpack:webpack",
+        "outputs": ["dist/apps/shell"],
+        "options": {
+          "outputPath": "dist/apps/shell",
+          "index": "shell/src/index.html",
+          "main": "shell/src/main.ts",
+          "tsConfig": "shell/tsconfig.app.json",
+          "assets": ["shell/src/assets"]
+        }
+      },
+      "serve": {
+        "executor": "@nx/webpack:dev-server",
+        "options": {
+          "buildTarget": "shell:build"
+        }
+      },
+      "typecheck": {
+        "executor": "@nx/js:tsc",
+        "options": {
+          "build": true
+        }
+      }
+    }
+  }
+  

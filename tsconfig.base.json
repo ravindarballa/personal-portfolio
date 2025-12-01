@@ -16,6 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@mfe-react-nx-app/source"]
+    "customConditions": ["@mfe-react-nx-app/source"],
+    "baseUrl": "."
   }
 }
